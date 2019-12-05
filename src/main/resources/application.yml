@@ -1,0 +1,12 @@
+
+spring:
+  application:
+    name: meal-operation
+  profiles:
+    active: db
+  task:
+    scheduling:
+      pool:
+        size: 50
+server:
+  port: 8088
