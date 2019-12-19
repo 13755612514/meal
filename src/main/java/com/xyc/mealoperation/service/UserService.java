@@ -24,7 +24,7 @@ public class UserService {
     @Autowired
     private UserMapper userMapper;
 
-    private final String WINDOWS_PROFILES_PATH = "E:\\meal\\profiles\\";
+    private final String WINDOWS_PROFILES_PATH = "C:/meal/profiles/";
     private final String LINUX_PROFILES_PATH = "/root/meal/profiles/";
 
     /**
@@ -57,10 +57,10 @@ public class UserService {
             String oldHeaderName = currentUser.getHeader();
             String newHeaderName = "";
             //如若存在头像名则使用该头像名否则新建一个名称
-            if (oldHeaderName == null || "".equals(oldHeaderName)){
-                newHeaderName = filePath + System.currentTimeMillis() + headerFile.getOriginalFilename();
-            }else {
+            if(oldHeaderName != null && (filePath.startsWith("C:") && oldHeaderName.startsWith("C:")) || (filePath.startsWith("/root") && oldHeaderName.startsWith("/root"))){
                 newHeaderName = oldHeaderName;
+            }else {
+                newHeaderName = filePath + System.currentTimeMillis() + headerFile.getOriginalFilename();
             }
             //磁盘保存
             BufferedOutputStream out = null;
