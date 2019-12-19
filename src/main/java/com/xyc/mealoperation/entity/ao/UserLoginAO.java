@@ -1,6 +1,7 @@
 package com.xyc.mealoperation.entity.ao;
 
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @Author xiongyancong
@@ -10,6 +11,7 @@ import lombok.Data;
 @Data
 public class UserLoginAO {
 
+    private MultipartFile headFile;
     private String username;
     private String email;
     private String password;

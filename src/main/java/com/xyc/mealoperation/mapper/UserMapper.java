@@ -10,4 +10,8 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface UserMapper {
     User findByEmailAndPassword(@Param("email") String email, @Param("password") String password);
+
+    User findByEmail(@Param("email") String email);
+
+    int updateHeaderByEmail(@Param("email") String email,@Param("header") String header);
 }

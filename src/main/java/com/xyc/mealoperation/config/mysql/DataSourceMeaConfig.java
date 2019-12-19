@@ -1,4 +1,4 @@
-package com.xyc.mealoperation.config;
+package com.xyc.mealoperation.config.mysql;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -21,6 +21,7 @@ public class DataSourceMeaConfig {
     @Bean(name = "mealDataSource")
     @Primary
     @ConfigurationProperties("spring.datasource.meal")
-    public DataSource mealDatasource() {return DataSourceBuilder.create().build();}
+    public DataSource mealDatasource() {return DataSourceBuilder.create().build();
+    }
 
 }

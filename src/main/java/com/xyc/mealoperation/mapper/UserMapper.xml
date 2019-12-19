@@ -4,4 +4,12 @@
   <select id="findByEmailAndPassword" resultType="com.xyc.mealoperation.entity.meal.User">
     select * from user where EMAIL = #{email} and PASSWORD = #{password}
   </select>
+
+  <select id="findByEmail" resultType="com.xyc.mealoperation.entity.meal.User">
+    select * from user where EMAIL = #{email}
+  </select>
+
+  <update id="updateHeaderByEmail" >
+    update user set HEADER = #{header} where EMAIL = #{email}
+  </update>
 </mapper>
