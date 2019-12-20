@@ -14,4 +14,6 @@ public interface UserMapper {
     User findByEmail(@Param("email") String email);
 
     int updateHeaderByEmail(@Param("email") String email,@Param("header") String header);
+
+    int saveInfo(User user);
 }

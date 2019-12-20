@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class User {
-    private Integer objectId;
+    private String objectId;
 
     private String userName;
 
@@ -16,7 +16,7 @@ public class User {
 
     private String introduction;
 
-    private String adress;
+    private String address;
 
     private Integer age;
 
@@ -26,14 +26,14 @@ public class User {
 
     private String header;
 
-    public User(Integer objectId, String userName, String password, String email, String creatDt, String introduction, String adress, Integer age, String birthday, String educational, String header) {
+    public User(String objectId, String userName, String password, String email, String creatDt, String introduction, String adress, Integer age, String birthday, String educational, String header) {
         this.objectId = objectId;
         this.userName = userName;
         this.password = password;
         this.email = email;
         this.creatDt = creatDt;
         this.introduction = introduction;
-        this.adress = adress;
+        this.address = adress;
         this.age = age;
         this.birthday = birthday;
         this.educational = educational;

@@ -3,6 +3,7 @@ package com.xyc.mealoperation.controller;
 import com.xyc.mealoperation.constant.ResultBean;
 import com.xyc.mealoperation.entity.ao.UserLoginAO;
 import com.xyc.mealoperation.entity.meal.User;
+import com.xyc.mealoperation.mapper.UserMapper;
 import com.xyc.mealoperation.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,14 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 @Slf4j
 @CrossOrigin
-@RequestMapping("/meal/user")
+@RequestMapping("/user")
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserMapper userMapper;
 
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    @RequestMapping(value = "/userLogin",method = RequestMethod.POST)
     @ResponseBody
     public ResultBean<User> userLogin(@RequestBody UserLoginAO userLoginAO){
         User user =
@@ -37,7 +40,7 @@ public class UserController {
 
     @RequestMapping(value = "/updateUserHeader",method = RequestMethod.POST)
     @ResponseBody
-    public ResultBean<String> updateUserHeader(@RequestParam("headFile") MultipartFile headFile, @RequestParam("email")String email){
+    public ResultBean<String> updateUserHeader(@RequestParam("headFile") MultipartFile headFile,@RequestParam("email") String email){
         String message = userService.updateHeader(headFile,email);
         return ResultBean.success(message);
     }
