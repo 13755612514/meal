@@ -12,4 +12,15 @@
   <update id="updateHeaderByEmail" >
     update user set HEADER = #{header} where EMAIL = #{email}
   </update>
+
+  <insert id="saveInfo" parameterType="com.xyc.mealoperation.entity.meal.User">
+    insert into user values (#{user.objectId},#{user.userName},#{user.password},
+        #{user.email},#{user.creatDt},#{user.introduction},#{user.address},#{user.age},
+        #{user.birthday},#{user.educational},#{user.header})
+  </insert>
+
+  <update id="updateInfo" parameterType="com.xyc.mealoperation.entity.meal.User">
+    update user set USER_NAME=#{userName},INTRODUCTION=#{introduction},ADDRESS=#{address},
+        BIRTHDAY=#{birthday},AGE=#{age},EDUCATIONAL=#{educational}
+  </update>
 </mapper>

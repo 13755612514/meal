@@ -15,5 +15,7 @@ public interface UserMapper {
 
     int updateHeaderByEmail(@Param("email") String email,@Param("header") String header);
 
-    int saveInfo(User user);
+    int saveInfo(@Param("user") User user);
+
+    int updateInfo(@Param("user") User user);
 }

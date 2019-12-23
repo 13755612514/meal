@@ -6,6 +6,6 @@
     </select>
 
     <select id="getByPage" resultType="com.xyc.mealoperation.entity.meal.Dynamic">
-        select * from dynamic where order by CREATE_TIME desc limit(#{pageCount},#{number});
+        select * from dynamic order by CREATE_TIME desc limit #{pageCount},#{number}
     </select>
 </mapper>

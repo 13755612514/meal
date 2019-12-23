@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class Comment {
 
-  private String objectId;
+  private int objectId;
   private long senderId;
   private long recipId;
   private String type;

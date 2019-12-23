@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 @Data
 public class Dynamic {
 
-  private String objectId;
+  private int objectId;
   private long sendId;
   private String title;
   private String description;

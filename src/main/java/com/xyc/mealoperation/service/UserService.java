@@ -1,7 +1,10 @@
 package com.xyc.mealoperation.service;
 
+import com.xyc.mealoperation.constant.ErrorEnum;
+import com.xyc.mealoperation.constant.ResultBean;
 import com.xyc.mealoperation.entity.meal.User;
 import com.xyc.mealoperation.mapper.UserMapper;
+import com.xyc.mealoperation.util.EncryptUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +14,8 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -34,6 +39,7 @@ public class UserService {
      * @return
      */
     public User userLogin(String email,String password){
+        password = EncryptUtil.getInstance().MD5(password);
         return userMapper.findByEmailAndPassword(email,password);
     }
 
@@ -96,5 +102,36 @@ public class UserService {
             return "设置头像成功";
         }
         return "设置头像失败,文件错误";
+    }
+
+    /**
+     * 用户注册
+     * @param user
+     * @return
+     */
+    public ResultBean register(User user){
+        if (userMapper.findByEmail(user.getEmail()) != null){
+            return ResultBean.fail(ErrorEnum.DATA_EXIST);
+        }
+        String password = EncryptUtil.getInstance().MD5(user.getPassword());
+        user.setPassword(password);
+        int status = userMapper.saveInfo(user);
+        if (status == 1){
+            return ResultBean.success(200,"注册成功");
+        }else {
+            return ResultBean.fail(ErrorEnum.UNKNOWN_EXCEPTION);
+        }
+
+    }
+
+    /**
+     * 修改用户个人信息
+     * @param user
+     * @return
+     */
+    public String updateUserInfo(User user){
+        int status = userMapper.updateInfo(user);
+        log.info("返回：{}",status);
+        return status + "";
     }
 }

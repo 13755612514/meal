@@ -71,11 +71,6 @@ public enum ErrorEnum {
      */
     PASSWORD_FORMAT_ERROR(432, "密码格式错误，要求8-16位数字字母混合字符(无特殊字符)"),
 
-    /**
-     * 微博第三方登陆认证错误
-     */
-    WEIBO_AUTH_ERROR(440, "微博认证错误"),
-    //endregion
 
     //region ########## 数据库相关 ##########
     /**

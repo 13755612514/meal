@@ -11,6 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @Author xiongyancong
  * @createTime 2019/12/17 10:54
@@ -23,8 +26,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class UserController {
     @Autowired
     private UserService userService;
-    @Autowired
-    private UserMapper userMapper;
 
     @RequestMapping(value = "/userLogin",method = RequestMethod.POST)
     @ResponseBody
@@ -43,5 +44,18 @@ public class UserController {
     public ResultBean<String> updateUserHeader(@RequestParam("headFile") MultipartFile headFile,@RequestParam("email") String email){
         String message = userService.updateHeader(headFile,email);
         return ResultBean.success(message);
+    }
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @ResponseBody
+    public ResultBean registerUser(@RequestBody User user){
+        log.info(user.toString());
+        Map<Integer,String> map = new HashMap<>();
+        return userService.register(user);
+    }
+    @RequestMapping(value = "/updateInfo")
+    @ResponseBody
+    public ResultBean updateInfo(User user){
+        String status = userService.updateUserInfo(user);
+        return ResultBean.success(200,"更新成功");
     }
 }

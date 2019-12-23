@@ -44,10 +44,8 @@ public class DynamicController {
     public ResultBean<List<Dynamic>> dynamicOutLimit(GetDynamicOutAO getDynamicOutAO){
         List<Dynamic> dynamicList =
                 dynamicService.getDynamicByPage(getDynamicOutAO);
-        if (dynamicList == null){
-            return ResultBean.fail(404,"未找到数据");
-        }else {
-            return ResultBean.success(dynamicList);
-        }
+        return ResultBean.success(dynamicList);
     }
+
+
 }

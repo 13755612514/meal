@@ -51,6 +51,8 @@ public class ResultBean<T> implements Serializable {
         return new ResultBean<>();
     }
 
+    public static <T> ResultBean<T> success(int code, String msg){ return new ResultBean<>(code,msg);}
+
     public static ResultBean fail(int code, String msg) {
         return new ResultBean<>(code, msg);
     }

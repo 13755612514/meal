@@ -42,7 +42,7 @@ public class DynamicService {
      */
     public List<Dynamic> getDynamicByPage(GetDynamicOutAO getDynamicOutAO){
         List<Dynamic> dynamicList =
-                dynamicMapper.getByPage(getDynamicOutAO.getPageCount()*20,getDynamicOutAO.getNumber());
+                dynamicMapper.getByPage((getDynamicOutAO.getPageCount()-1)*20,getDynamicOutAO.getNumber());
         return dynamicList;
     }
 }
