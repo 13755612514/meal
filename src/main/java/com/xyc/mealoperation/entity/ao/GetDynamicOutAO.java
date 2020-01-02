@@ -13,4 +13,6 @@ public class GetDynamicOutAO {
     private int number = 20;
     //页数
     private int pageCount = 1;
+    //类型
+    private int type;
 }

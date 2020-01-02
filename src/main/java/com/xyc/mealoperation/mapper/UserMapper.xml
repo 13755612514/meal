@@ -21,6 +21,6 @@
 
   <update id="updateInfo" parameterType="com.xyc.mealoperation.entity.meal.User">
     update user set USER_NAME=#{userName},INTRODUCTION=#{introduction},ADDRESS=#{address},
-        BIRTHDAY=#{birthday},AGE=#{age},EDUCATIONAL=#{educational}
+        BIRTHDAY=#{birthday},AGE=#{age},EDUCATIONAL=#{educational} where OBJECT_ID = #{objectId}
   </update>
 </mapper>

@@ -52,7 +52,6 @@ public class UserService {
     public String updateHeader(MultipartFile headerFile,String email){
         //获取操作系统
         String OSName = System.getProperty("os.name");
-        log.info(OSName);
         //根据操作系统选择路径
         String filePath = OSName.toLowerCase().startsWith("win") ? WINDOWS_PROFILES_PATH : LINUX_PROFILES_PATH;
 

@@ -31,4 +31,13 @@ public interface DynamicMapper {
      * @return
      */
     List<Dynamic> getByPage(@Param("pageCount") int pageCount,@Param("number") int number);
+
+    /**
+     * 分页+类型查询
+     * @param pageCount
+     * @param number
+     * @param type
+     * @return
+     */
+    List<Dynamic> getByPageAndType(@Param("pageCount") int pageCount,@Param("number") int number,@Param("type") int type);
 }
