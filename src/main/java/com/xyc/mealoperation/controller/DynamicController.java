@@ -28,15 +28,11 @@ public class DynamicController {
 
     @RequestMapping("/dynamicOut")
     @ResponseBody
-    public ResultBean<List<Dynamic>> dynamicOut(){
+    public ResultBean dynamicOut(){
         List<Dynamic> dynamicList =
                 dynamicService.getAllDynamic();
         log.info(dynamicList.toString());
-        if (dynamicList != null){
-            return ResultBean.success(dynamicList);
-        }else {
-            return ResultBean.fail(404,"未找到数据!");
-        }
+        return ResultBean.success(dynamicList);
     }
 
     @RequestMapping("/dynamicOutPage")

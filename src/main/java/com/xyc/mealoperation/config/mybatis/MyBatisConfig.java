@@ -2,6 +2,7 @@ package com.xyc.mealoperation.config.mybatis;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
+import com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import javax.sql.DataSource;
  * @Description
  **/
 @Configuration
-@MapperScan(basePackages = "com.xyc.mealoperation.mapper", sqlSessionFactoryRef = "sqlSessionFactoryMeal")
+@MapperScan(basePackages = {"com.xyc.mealoperation.mapper"}, sqlSessionFactoryRef = "sqlSessionFactoryMeal")
 public class MyBatisConfig {
 
     @Autowired
@@ -29,7 +30,7 @@ public class MyBatisConfig {
     @Primary
     @Bean(name = "sqlSessionFactoryMeal") public SqlSessionFactory sqlSessionFactoryMeal()
             throws Exception {
-        SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
+        MybatisSqlSessionFactoryBean bean = new MybatisSqlSessionFactoryBean();
         bean.setDataSource(windDataSource);
         bean.setTypeAliasesPackage("com.xyc.mealoperation.entity");
         bean.setConfigLocation(new ClassPathResource("config/mybatis-config.xml"));

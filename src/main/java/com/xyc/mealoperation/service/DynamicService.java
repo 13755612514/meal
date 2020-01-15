@@ -2,7 +2,6 @@ package com.xyc.mealoperation.service;
 
 import com.xyc.mealoperation.entity.ao.GetDynamicOutAO;
 import com.xyc.mealoperation.entity.meal.Dynamic;
-import com.xyc.mealoperation.entity.meal.User;
 import com.xyc.mealoperation.mapper.DynamicMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +24,8 @@ import java.util.List;
 @Service
 @Slf4j
 public class DynamicService {
-    private final String WINDOWS_PROFILES_PATH = "C:/meal/profiles/";
-    private final String LINUX_PROFILES_PATH = "/root/meal/profiles/";
+    private final String WINDOWS_PROFILES_PATH = "C:/meal/profiles/video";
+    private final String LINUX_PROFILES_PATH = "/root/meal/profiles/video";
 
     @Autowired
     private DynamicMapper dynamicMapper;
@@ -66,57 +65,48 @@ public class DynamicService {
         return  dynamicList;
     }
 
-    public String addDynamic(MultipartFile video, int sendId){
-//        //获取操作系统
-//        String OSName = System.getProperty("os.name");
-//        //根据操作系统选择路径
-//        String filePath = OSName.toLowerCase().startsWith("win") ? WINDOWS_PROFILES_PATH : LINUX_PROFILES_PATH;
-//
-//        if (!video.isEmpty()){
-//            //获取当前用户
-//            User currentUser = userMapper.findByEmail(email);
-//            //获取当前用户头像名
-//            String oldHeaderName = currentUser.getHeader();
-//            String newHeaderName = "";
-//            //如若存在头像名则使用该头像名否则新建一个名称
-//            if(oldHeaderName != null && (filePath.startsWith("C:") && oldHeaderName.startsWith("C:")) || (filePath.startsWith("/root") && oldHeaderName.startsWith("/root"))){
-//                newHeaderName = oldHeaderName;
-//            }else {
-//                newHeaderName = filePath + System.currentTimeMillis() + headerFile.getOriginalFilename();
-//            }
-//            //磁盘保存
-//            BufferedOutputStream out = null;
-//            try {
-//                File file = new File(newHeaderName);
-//                if (!file.getParentFile().exists()){
-//                    file.getParentFile().mkdirs();
-//                    file.createNewFile();
-//                }else {
-//                    if (!file.exists()){
-//                        file.createNewFile();
-//                    }
-//                }
-//                out = new BufferedOutputStream(new FileOutputStream(newHeaderName));
-//                //写入文件
-//                out.write(headerFile.getBytes());
-//                out.flush();
-//            }catch (Exception e){
-//                e.printStackTrace();
-//                return "设置头像失败";
-//            }finally {
-//                if (out != null){
-//                    try {
-//                        out.close();
-//                    }catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//            //路径存库
-//            currentUser.setHeader(newHeaderName);
-//            userMapper.updateHeaderByEmail(email,newHeaderName);
-//            return "设置头像成功";
-//        }
-        return "设置头像失败,文件错误";
+    public String addDynamic(MultipartFile video, Dynamic dynamic){
+        //获取操作系统
+        String OSName = System.getProperty("os.name");
+        //根据操作系统选择路径
+        String filePath = OSName.toLowerCase().startsWith("win") ? WINDOWS_PROFILES_PATH : LINUX_PROFILES_PATH;
+        //文件不为空时才写入
+        if (!video.isEmpty()){
+            //获取当前用户头像名
+            String videoPathName = filePath + System.currentTimeMillis() + video.getOriginalFilename();;
+            //磁盘保存
+            BufferedOutputStream out = null;
+            try {
+                File file = new File(videoPathName);
+                if (!file.getParentFile().exists()){
+                    file.getParentFile().mkdirs();
+                    file.createNewFile();
+                }else {
+                    if (!file.exists()){
+                        file.createNewFile();
+                    }
+                }
+                out = new BufferedOutputStream(new FileOutputStream(videoPathName));
+                //写入文件
+                out.write(videoPathName.getBytes());
+                out.flush();
+            }catch (Exception e){
+                e.printStackTrace();
+                return "上传失败";
+            }finally {
+                if (out != null){
+                    try {
+                        out.close();
+                    }catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            //路径存库
+           dynamic.setContent(videoPathName);
+            dynamicMapper.insert(dynamic);
+            return "上传成功。";
+        }
+        return "上传成功。";
     }
 }

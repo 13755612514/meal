@@ -14,8 +14,6 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 
 /**
@@ -29,8 +27,8 @@ public class UserService {
     @Autowired
     private UserMapper userMapper;
 
-    private final String WINDOWS_PROFILES_PATH = "C:/meal/profiles/";
-    private final String LINUX_PROFILES_PATH = "/root/meal/profiles/";
+    private final String WINDOWS_PROFILES_PATH = "C:/meal/profiles/header";
+    private final String LINUX_PROFILES_PATH = "/root/meal/profiles/header";
 
     /**
      * 根据用户email和密码查询用户来登录
@@ -38,9 +36,11 @@ public class UserService {
      * @param password
      * @return
      */
-    public User userLogin(String email,String password){
-        password = EncryptUtil.getInstance().MD5(password);
-        return userMapper.findByEmailAndPassword(email,password);
+    public User userLogin(String email, String password){
+        User user = new User();
+        user.setEmail(email);
+        user.setPassword(EncryptUtil.getInstance().MD5(password));
+        return userMapper.selectOne(user);
     }
 
     /**
@@ -129,7 +129,7 @@ public class UserService {
      * @return
      */
     public String updateUserInfo(User user){
-        int status = userMapper.updateInfo(user);
+        int status = userMapper.updateById(user);
         log.info("返回：{}",status);
         return status + "";
     }

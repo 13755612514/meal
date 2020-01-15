@@ -22,5 +22,4 @@ public class DataSourceMeaConfig {
     @ConfigurationProperties("spring.datasource.meal")
     public DataSource mealDatasource() {return DataSourceBuilder.create().build();
     }
-
 }

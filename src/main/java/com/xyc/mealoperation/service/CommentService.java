@@ -19,6 +19,11 @@ public class CommentService {
     @Autowired
     CommentMapper commentMapper;
 
+    /**
+     * 根据动态id写入数据
+     * @param dyId
+     * @return
+     */
     public List<Comment> getAllByDyId(int dyId){
         List<Comment> commentList =
                 commentMapper.findByDyId(dyId);

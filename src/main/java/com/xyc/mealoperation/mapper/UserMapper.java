@@ -1,14 +1,16 @@
 package com.xyc.mealoperation.mapper;
 
 
+
+import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.xyc.mealoperation.entity.meal.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-@Repository
 @Mapper
-public interface UserMapper {
+@Repository
+public interface UserMapper extends BaseMapper<User> {
     User findByEmailAndPassword(@Param("email") String email, @Param("password") String password);
 
     User findByEmail(@Param("email") String email);

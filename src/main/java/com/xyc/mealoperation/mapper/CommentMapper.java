@@ -1,5 +1,6 @@
 package com.xyc.mealoperation.mapper;
 
+import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.xyc.mealoperation.entity.meal.Comment;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -14,6 +15,6 @@ import java.util.List;
  **/
 @Repository
 @Mapper
-public interface CommentMapper {
+public interface CommentMapper extends BaseMapper<Comment> {
     List<Comment> findByDyId(@Param("dyId") int dyId);
 }

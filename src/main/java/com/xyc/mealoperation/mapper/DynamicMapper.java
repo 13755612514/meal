@@ -1,5 +1,6 @@
 package com.xyc.mealoperation.mapper;
 
+import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.xyc.mealoperation.entity.meal.Dynamic;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -15,7 +16,7 @@ import java.util.List;
  **/
 @Repository
 @Mapper
-public interface DynamicMapper {
+public interface DynamicMapper extends BaseMapper<Dynamic> {
     /**
      * 获取一段时间内的数据
      * @param start

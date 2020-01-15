@@ -3,7 +3,6 @@ package com.xyc.mealoperation.controller;
 import com.xyc.mealoperation.constant.ResultBean;
 import com.xyc.mealoperation.entity.ao.UserLoginAO;
 import com.xyc.mealoperation.entity.meal.User;
-import com.xyc.mealoperation.mapper.UserMapper;
 import com.xyc.mealoperation.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

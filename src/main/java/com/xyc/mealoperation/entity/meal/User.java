@@ -1,47 +1,161 @@
 package com.xyc.mealoperation.entity.meal;
 
-import lombok.Data;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import java.io.Serializable;
 
-@Data
-public class User {
-    private int objectId;
+/**
+ * @Description  
+ * @Author  xiongyancong
+ * @Date 2020-01-15 14:15:00 
+ */
 
-    private String userName;
+@Entity
+@Table ( name ="user")
+public class User  implements Serializable {
 
-    private String password;
+	private static final long serialVersionUID =  1983486887651619859L;
 
-    private String email;
+   	@Column(name = "OBJECT_ID" )
+	@Id
+	private Long objectId;
 
-    private String creatDt;
+   	@Column(name = "USER_NAME" )
+	private String userName;
 
-    private String introduction;
+   	@Column(name = "PASSWORD" )
+	private String password;
 
-    private String address;
+   	@Column(name = "EMAIL" )
+	private String email;
 
-    private Integer age;
+   	@Column(name = "CREAT_DT" )
+	private String creatDt;
 
-    private String birthday;
+   	@Column(name = "INTRODUCTION" )
+	private String introduction;
 
-    private String educational;
+   	@Column(name = "ADDRESS" )
+	private String address;
 
-    private String header;
+   	@Column(name = "AGE" )
+	private Long age;
 
-    public User(int objectId, String userName, String password, String email, String creatDt, String introduction, String address, Integer age, String birthday, String educational, String header) {
-        this.objectId = objectId;
-        this.userName = userName;
-        this.password = password;
-        this.email = email;
-        this.creatDt = creatDt;
-        this.introduction = introduction;
-        this.address = address;
-        this.age = age;
-        this.birthday = birthday;
-        this.educational = educational;
-        this.header = header;
-    }
+   	@Column(name = "BIRTHDAY" )
+	private String birthday;
 
-    public User() {
-        super();
-    }
+   	@Column(name = "EDUCATIONAL" )
+	private String educational;
+
+   	@Column(name = "HEADER" )
+	private String header;
+
+	public Long getObjectId() {
+		return this.objectId;
+	}
+
+	public void setObjectId(Long objectId) {
+		this.objectId = objectId;
+	}
+
+	public String getUserName() {
+		return this.userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getPassword() {
+		return this.password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getEmail() {
+		return this.email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getCreatDt() {
+		return this.creatDt;
+	}
+
+	public void setCreatDt(String creatDt) {
+		this.creatDt = creatDt;
+	}
+
+	public String getIntroduction() {
+		return this.introduction;
+	}
+
+	public void setIntroduction(String introduction) {
+		this.introduction = introduction;
+	}
+
+	public String getAddress() {
+		return this.address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public Long getAge() {
+		return this.age;
+	}
+
+	public void setAge(Long age) {
+		this.age = age;
+	}
+
+	public String getBirthday() {
+		return this.birthday;
+	}
+
+	public void setBirthday(String birthday) {
+		this.birthday = birthday;
+	}
+
+	public String getEducational() {
+		return this.educational;
+	}
+
+	public void setEducational(String educational) {
+		this.educational = educational;
+	}
+
+	public String getHeader() {
+		return this.header;
+	}
+
+	public void setHeader(String header) {
+		this.header = header;
+	}
+
+	@Override
+	public String toString() {
+		return "{" +
+					"objectId='" + objectId + '\'' +
+					"userName='" + userName + '\'' +
+					"password='" + password + '\'' +
+					"email='" + email + '\'' +
+					"creatDt='" + creatDt + '\'' +
+					"introduction='" + introduction + '\'' +
+					"address='" + address + '\'' +
+					"age='" + age + '\'' +
+					"birthday='" + birthday + '\'' +
+					"educational='" + educational + '\'' +
+					"header='" + header + '\'' +
+				'}';
+	}
 
 }
