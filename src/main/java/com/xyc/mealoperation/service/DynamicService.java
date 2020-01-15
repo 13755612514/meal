@@ -1,8 +1,12 @@
 package com.xyc.mealoperation.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.xyc.mealoperation.entity.ao.GetDynamicOutAO;
 import com.xyc.mealoperation.entity.meal.Dynamic;
+import com.xyc.mealoperation.entity.meal.Relation;
+import com.xyc.mealoperation.entity.meal.User;
 import com.xyc.mealoperation.mapper.DynamicMapper;
+import com.xyc.mealoperation.mapper.RelationMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +19,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @Author xiongyancong
@@ -29,6 +34,9 @@ public class DynamicService {
 
     @Autowired
     private DynamicMapper dynamicMapper;
+
+    @Autowired
+    private RelationMapper relationMapper;
 
     /**
      * 获取一年内所有的动态
@@ -65,6 +73,12 @@ public class DynamicService {
         return  dynamicList;
     }
 
+    /**
+     * 添加动态
+     * @param video
+     * @param dynamic
+     * @return
+     */
     public String addDynamic(MultipartFile video, Dynamic dynamic){
         //获取操作系统
         String OSName = System.getProperty("os.name");
@@ -72,7 +86,7 @@ public class DynamicService {
         String filePath = OSName.toLowerCase().startsWith("win") ? WINDOWS_PROFILES_PATH : LINUX_PROFILES_PATH;
         //文件不为空时才写入
         if (!video.isEmpty()){
-            //获取当前用户头像名
+            //获取当前文件名
             String videoPathName = filePath + System.currentTimeMillis() + video.getOriginalFilename();;
             //磁盘保存
             BufferedOutputStream out = null;
@@ -108,5 +122,37 @@ public class DynamicService {
             return "上传成功。";
         }
         return "上传成功。";
+    }
+
+    /**
+     * 根据用户id返回该用户关注的用户发表的动态
+     * @param user
+     * @return
+     */
+    public List<Dynamic> findByAttentionUser(User user){
+        if (user.getObjectId() != null){
+            //查询该用户关注列表
+            List<Relation> relationList =
+                    relationMapper.selectList(new QueryWrapper<Relation>()
+                            .eq("ATTENTION_ID",user.getObjectId()));
+            List<Long> attentionIdList =
+                    relationList.stream().map(Relation::getAttentionId).distinct().collect(Collectors.toList());
+            return dynamicMapper.selectList(new QueryWrapper<Dynamic>()
+                    .in("SEND_ID",attentionIdList));
+        }
+        return null;
+    }
+
+    /**
+     * 查看我发表的动态
+     * @param user
+     * @return
+     */
+    public List<Dynamic> findByUserId(User user){
+        if (user.getObjectId() != null){
+            return dynamicMapper.selectList(new QueryWrapper<Dynamic>()
+                            .eq("SEND_ID",user.getObjectId()));
+        }
+        return null;
     }
 }

@@ -1,5 +1,6 @@
 package com.xyc.mealoperation.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.xyc.mealoperation.constant.ErrorEnum;
 import com.xyc.mealoperation.constant.ResultBean;
 import com.xyc.mealoperation.entity.meal.User;
@@ -9,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -37,10 +37,9 @@ public class UserService {
      * @return
      */
     public User userLogin(String email, String password){
-        User user = new User();
-        user.setEmail(email);
-        user.setPassword(EncryptUtil.getInstance().MD5(password));
-        return userMapper.selectOne(user);
+        return userMapper.selectOne(new QueryWrapper<User>()
+                .eq("EMAIL",email)
+                .eq("PASSWORD",EncryptUtil.getInstance().MD5(password)));
     }
 
     /**
