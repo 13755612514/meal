@@ -1,7 +1,6 @@
 package com.xyc.mealoperation.util;
 
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
-
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.Mac;

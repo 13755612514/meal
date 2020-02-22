@@ -1,10 +1,5 @@
 package com.xyc.mealoperation.entity.meal;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
 import java.io.Serializable;
 
 /**
@@ -12,45 +7,20 @@ import java.io.Serializable;
  * @Author  xiongyancong
  * @Date 2020-01-15 14:15:00 
  */
-
-@Entity
-@Table ( name ="user")
 public class User  implements Serializable {
 
 	private static final long serialVersionUID =  1983486887651619859L;
 
-   	@Column(name = "OBJECT_ID" )
-	@Id
 	private Long objectId;
-
-   	@Column(name = "USER_NAME" )
 	private String userName;
-
-   	@Column(name = "PASSWORD" )
 	private String password;
-
-   	@Column(name = "EMAIL" )
 	private String email;
-
-   	@Column(name = "CREAT_DT" )
 	private String creatDt;
-
-   	@Column(name = "INTRODUCTION" )
 	private String introduction;
-
-   	@Column(name = "ADDRESS" )
 	private String address;
-
-   	@Column(name = "AGE" )
 	private Long age;
-
-   	@Column(name = "BIRTHDAY" )
 	private String birthday;
-
-   	@Column(name = "EDUCATIONAL" )
 	private String educational;
-
-   	@Column(name = "HEADER" )
 	private String header;
 
 	public Long getObjectId() {

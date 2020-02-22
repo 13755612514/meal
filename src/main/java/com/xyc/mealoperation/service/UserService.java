@@ -14,6 +14,9 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 /**
@@ -29,7 +32,7 @@ public class UserService {
 
     private final String WINDOWS_PROFILES_PATH = "C:/meal/profiles/header";
     private final String LINUX_PROFILES_PATH = "/root/meal/profiles/header";
-
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     /**
      * 根据用户email和密码查询用户来登录
      * @param email
@@ -112,6 +115,8 @@ public class UserService {
             return ResultBean.fail(ErrorEnum.DATA_EXIST);
         }
         String password = EncryptUtil.getInstance().MD5(user.getPassword());
+        String createTime = LocalDate.now().format(formatter);
+        user.setCreatDt(createTime);
         user.setPassword(password);
         int status = userMapper.saveInfo(user);
         if (status == 1){
