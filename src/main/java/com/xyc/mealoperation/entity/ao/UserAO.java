@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @Description
  **/
 @Data
-public class UserLoginAO {
+public class UserAO {
 
     private MultipartFile headFile;
     private String username;

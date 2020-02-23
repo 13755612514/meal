@@ -1,7 +1,7 @@
 package com.xyc.mealoperation.controller;
 
 import com.xyc.mealoperation.constant.ResultBean;
-import com.xyc.mealoperation.entity.ao.UserLoginAO;
+import com.xyc.mealoperation.entity.ao.UserAO;
 import com.xyc.mealoperation.entity.meal.User;
 import com.xyc.mealoperation.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +28,7 @@ public class UserController {
 
     @RequestMapping(value = "/userLogin",method = RequestMethod.POST)
     @ResponseBody
-    public ResultBean<User> userLogin(@RequestBody UserLoginAO userLoginAO){
+    public ResultBean<User> userLogin(@RequestBody UserAO userLoginAO){
         User user =
                 userService.userLogin(userLoginAO.getEmail(),userLoginAO.getPassword());
         if (user != null){
@@ -46,7 +46,7 @@ public class UserController {
     }
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ResponseBody
-    public ResultBean registerUser(@RequestBody User user){
+    public ResultBean registerUser(UserAO user){
         log.info(user.toString());
         Map<Integer,String> map = new HashMap<>();
         return userService.register(user);

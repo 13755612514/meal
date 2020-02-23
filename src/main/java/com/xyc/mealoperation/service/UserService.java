@@ -3,6 +3,7 @@ package com.xyc.mealoperation.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.xyc.mealoperation.constant.ErrorEnum;
 import com.xyc.mealoperation.constant.ResultBean;
+import com.xyc.mealoperation.entity.ao.UserAO;
 import com.xyc.mealoperation.entity.meal.User;
 import com.xyc.mealoperation.mapper.UserMapper;
 import com.xyc.mealoperation.util.EncryptUtil;
@@ -107,15 +108,17 @@ public class UserService {
 
     /**
      * 用户注册
-     * @param user
+     * @param userAO
      * @return
      */
-    public ResultBean register(User user){
-        if (userMapper.findByEmail(user.getEmail()) != null){
+    public ResultBean register(UserAO userAO){
+        if (userMapper.findByEmail(userAO.getEmail()) != null){
             return ResultBean.fail(ErrorEnum.DATA_EXIST);
         }
-        String password = EncryptUtil.getInstance().MD5(user.getPassword());
+        User user = new User();
+        String password = EncryptUtil.getInstance().MD5(userAO.getPassword());
         String createTime = LocalDate.now().format(formatter);
+        user.setEmail(userAO.getEmail());
         user.setCreatDt(createTime);
         user.setPassword(password);
         int status = userMapper.saveInfo(user);
