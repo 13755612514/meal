@@ -48,7 +48,6 @@ public class UserController {
     @ResponseBody
     public ResultBean registerUser(UserAO user){
         log.info(user.toString());
-        Map<Integer,String> map = new HashMap<>();
         return userService.register(user);
     }
     @RequestMapping(value = "/updateInfo")
