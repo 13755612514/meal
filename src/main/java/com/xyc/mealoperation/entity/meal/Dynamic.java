@@ -1,6 +1,8 @@
 package com.xyc.mealoperation.entity.meal;
 
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.sql.Timestamp;
@@ -8,7 +10,8 @@ import java.sql.Timestamp;
 @Data
 public class Dynamic {
 
-  private int objectId;
+  @TableId(type = IdType.AUTO)
+  private Long objectId;
   private long sendId;
   private String title;
   private String description;
@@ -17,12 +20,21 @@ public class Dynamic {
   private long type;
   private long likeCount;
   private long favoriteCount;
+  private String headFile;
 
-  public int getObjectId() {
+  public String getHeadFile() {
+    return headFile;
+  }
+
+  public void setHeadFile(String headFile) {
+    this.headFile = headFile;
+  }
+
+  public Long getObjectId() {
     return objectId;
   }
 
-  public void setObjectId(int objectId) {
+  public void setObjectId(Long objectId) {
     this.objectId = objectId;
   }
 

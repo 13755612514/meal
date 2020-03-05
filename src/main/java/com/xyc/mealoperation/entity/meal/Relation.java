@@ -1,5 +1,8 @@
 package com.xyc.mealoperation.entity.meal;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.io.Serializable;
 
 /**
@@ -11,11 +14,21 @@ import java.io.Serializable;
 public class Relation  implements Serializable {
 
 	private static final long serialVersionUID =  4307618229017387148L;
+	@TableId(type = IdType.AUTO)
 	private Long obiectId;
 	private Long userId;
 	private Long attentionId;
-	private Long followedId;
+	private String followedHeader;
 	private String createDt;
+
+
+	public String getFollowedHeader() {
+		return followedHeader;
+	}
+
+	public void setFollowedHeader(String followedHeader) {
+		this.followedHeader = followedHeader;
+	}
 
 	public Long getObiectId() {
 		return this.obiectId;
@@ -41,14 +54,6 @@ public class Relation  implements Serializable {
 		this.attentionId = attentionId;
 	}
 
-	public Long getFollowedId() {
-		return this.followedId;
-	}
-
-	public void setFollowedId(Long followedId) {
-		this.followedId = followedId;
-	}
-
 	public String getCreateDt() {
 		return this.createDt;
 	}
@@ -63,7 +68,7 @@ public class Relation  implements Serializable {
 					"obiectId='" + obiectId + '\'' +
 					"userId='" + userId + '\'' +
 					"attentionId='" + attentionId + '\'' +
-					"followedId='" + followedId + '\'' +
+					"followedId='" + followedHeader + '\'' +
 					"createDt='" + createDt + '\'' +
 				'}';
 	}

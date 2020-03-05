@@ -4,20 +4,30 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.xyc.mealoperation.constant.ErrorEnum;
 import com.xyc.mealoperation.constant.ResultBean;
 import com.xyc.mealoperation.entity.ao.UserAO;
+import com.xyc.mealoperation.entity.meal.Dynamic;
+import com.xyc.mealoperation.entity.meal.Favorite;
+import com.xyc.mealoperation.entity.meal.Relation;
 import com.xyc.mealoperation.entity.meal.User;
+import com.xyc.mealoperation.mapper.DynamicMapper;
+import com.xyc.mealoperation.mapper.FavoriteMapper;
+import com.xyc.mealoperation.mapper.RelationMapper;
 import com.xyc.mealoperation.mapper.UserMapper;
 import com.xyc.mealoperation.util.EncryptUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -30,6 +40,12 @@ import java.time.format.DateTimeFormatter;
 public class UserService {
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private RelationMapper relationMapper;
+    @Autowired
+    private FavoriteMapper favoriteMapper;
+    @Autowired
+    private DynamicMapper dynamicMapper;
 
     private final String WINDOWS_PROFILES_PATH = "C:/meal/profiles/header";
     private final String LINUX_PROFILES_PATH = "/root/meal/profiles/header";
@@ -139,5 +155,126 @@ public class UserService {
         int status = userMapper.updateById(user);
         log.info("返回：{}",status);
         return status + "";
+    }
+
+    /**
+     * 修改密码
+     * @param objectId
+     * @param password
+     * @return
+     */
+    public int updatePassword(Long objectId, String password) {
+        User user = new User();
+        user.setPassword(EncryptUtil.getInstance().MD5(password));
+        user.setObjectId(objectId);
+        int status = userMapper.updateById(user);
+        return status;
+    }
+
+    /**
+     * 添加关注
+     * @param userId
+     * @param attentionId
+     * @return
+     */
+    public ResultBean addRelation (Long userId, Long attentionId) {
+        Relation relation = relationMapper.selectOne(new QueryWrapper<Relation>()
+                .eq("USER_ID",userId)
+                .eq("ATTENTION_ID",attentionId));
+        if (relation != null) {
+            return ResultBean.fail(ErrorEnum.DATA_EXIST);
+        }
+        String header = userMapper.selectById(attentionId).getHeader();
+        LocalDate timeNow = LocalDate.now();
+        Relation relation2 = new Relation();
+        relation2.setUserId(userId);
+        relation2.setAttentionId(attentionId);
+        relation2.setCreateDt(timeNow.format(formatter));
+        relation2.setFollowedHeader(header);
+        int status = relationMapper.insert(relation2);
+        return ResultBean.success(200,"关注成功");
+    }
+
+    /**
+     * 取消关注
+     * @param objectId
+     * @return
+     */
+    public ResultBean deleteRelation(Long objectId){
+        int status = relationMapper.deleteById(objectId);
+        if (status == 1) {
+            return ResultBean.success(200,"取消成功");
+        }
+        return ResultBean.fail(ErrorEnum.DATA_NOT_FOUND);
+    }
+
+    /**
+     * 我的关注列表
+     * @param userId
+     * @return
+     */
+    public ResultBean relationOut(Long userId) {
+        List<Relation> relationList = relationMapper.selectList(new QueryWrapper<Relation>()
+                .eq("USER_ID",userId));
+        return ResultBean.success(relationList);
+    }
+
+    /**
+     * 我的收藏夹
+     * @param userId
+     * @return
+     */
+    public ResultBean myFavoriteDynainc (Long userId) {
+        List<Favorite> favoriteList =
+                favoriteMapper.selectList(new QueryWrapper<Favorite>()
+                        .eq("USER_ID",userId));
+        if (!CollectionUtils.isEmpty(favoriteList)) {
+            List<Long> dynamicIdList =
+                    favoriteList.stream().map(Favorite::getDyId).distinct().collect(Collectors.toList());
+            List<Dynamic> dynamicList =
+                    dynamicMapper.selectList(new QueryWrapper<Dynamic>()
+                            .in("OBJECT_ID",dynamicIdList));
+            return ResultBean.success(dynamicList);
+        }
+        return ResultBean.fail(ErrorEnum.DATA_NOT_FOUND);
+    }
+
+    /**
+     * 取消收藏
+     * @param objectId
+     * @return
+     */
+    public ResultBean deleteFavDy(Long objectId){
+        int status = favoriteMapper.deleteById(objectId);
+        if (status == 1) {
+            return ResultBean.success(200,"取消收藏成功");
+        }
+        return ResultBean.fail(ErrorEnum.DATA_NOT_FOUND);
+    }
+
+    /**
+     * 添加收藏
+     * @param userId
+     * @param dyId
+     * @return
+     */
+    public ResultBean addFav(Long userId, Long dyId) {
+        Favorite favoriteOld = favoriteMapper.selectOne(new QueryWrapper<Favorite>()
+                .eq("USER_ID",userId)
+                .eq("DY_ID",dyId));
+        if (favoriteOld != null) {
+            return ResultBean.fail(ErrorEnum.DATA_EXIST);
+        }
+        Timestamp timeNow = new Timestamp(System.currentTimeMillis());
+        Favorite favorite = new Favorite();
+        favorite.setUserId(userId);
+        favorite.setDyId(dyId);
+        favorite.setCreatTime(timeNow);
+        favorite.setUpdateTime(timeNow);
+        int status = favoriteMapper.insert(favorite);
+        if (status == 1) {
+            return ResultBean.success(200,"收藏成功");
+        }
+        return ResultBean.fail(ErrorEnum.UNKNOWN_EXCEPTION);
     }
 }

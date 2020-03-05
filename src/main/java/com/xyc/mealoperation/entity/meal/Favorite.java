@@ -1,5 +1,8 @@
 package com.xyc.mealoperation.entity.meal;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -13,6 +16,7 @@ import java.util.Date;
 public class Favorite  implements Serializable {
 
 	private static final long serialVersionUID =  8220078060728008032L;
+	@TableId(type = IdType.AUTO)
 	private Long objectId;
 	private Long userId;
 	private Long dyId;

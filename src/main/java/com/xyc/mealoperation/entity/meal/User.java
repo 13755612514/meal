@@ -1,5 +1,8 @@
 package com.xyc.mealoperation.entity.meal;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.io.Serializable;
 
 /**
@@ -11,6 +14,7 @@ public class User  implements Serializable {
 
 	private static final long serialVersionUID =  1983486887651619859L;
 
+	@TableId(type = IdType.AUTO)
 	private Long objectId;
 	private String userName;
 	private String password;
@@ -22,6 +26,27 @@ public class User  implements Serializable {
 	private String birthday;
 	private String educational;
 	private String header;
+
+	public User() {
+	}
+
+	public User(Long objectId) {
+		this.objectId = objectId;
+	}
+
+	public User(Long objectId, String userName, String password, String email, String creatDt, String introduction, String address, Long age, String birthday, String educational, String header) {
+		this.objectId = objectId;
+		this.userName = userName;
+		this.password = password;
+		this.email = email;
+		this.creatDt = creatDt;
+		this.introduction = introduction;
+		this.address = address;
+		this.age = age;
+		this.birthday = birthday;
+		this.educational = educational;
+		this.header = header;
+	}
 
 	public Long getObjectId() {
 		return this.objectId;

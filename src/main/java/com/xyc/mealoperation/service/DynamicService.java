@@ -7,9 +7,11 @@ import com.xyc.mealoperation.entity.meal.Relation;
 import com.xyc.mealoperation.entity.meal.User;
 import com.xyc.mealoperation.mapper.DynamicMapper;
 import com.xyc.mealoperation.mapper.RelationMapper;
+import com.xyc.mealoperation.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedOutputStream;
@@ -37,6 +39,9 @@ public class DynamicService {
 
     @Autowired
     private RelationMapper relationMapper;
+
+    @Autowired
+    private UserMapper userMapper;
 
     /**
      * 获取一年内所有的动态
@@ -117,7 +122,9 @@ public class DynamicService {
                 }
             }
             //路径存库
-           dynamic.setContent(videoPathName);
+            User user = userMapper.selectById(dynamic.getSendId());
+            dynamic.setHeadFile(user.getHeader());
+            dynamic.setContent(videoPathName);
             dynamicMapper.insert(dynamic);
             return "上传成功。";
         }
@@ -134,11 +141,15 @@ public class DynamicService {
             //查询该用户关注列表
             List<Relation> relationList =
                     relationMapper.selectList(new QueryWrapper<Relation>()
-                            .eq("ATTENTION_ID",user.getObjectId()));
-            List<Long> attentionIdList =
-                    relationList.stream().map(Relation::getAttentionId).distinct().collect(Collectors.toList());
-            return dynamicMapper.selectList(new QueryWrapper<Dynamic>()
-                    .in("SEND_ID",attentionIdList));
+                            .eq("USER_ID",user.getObjectId()));
+            if (!CollectionUtils.isEmpty(relationList)) {
+                List<Long> attentionIdList =
+                        relationList.stream().map(Relation::getAttentionId).distinct().collect(Collectors.toList());
+                if (!CollectionUtils.isEmpty(attentionIdList)) {
+                    return dynamicMapper.selectList(new QueryWrapper<Dynamic>()
+                            .in("SEND_ID",attentionIdList));
+                }
+            }
         }
         return null;
     }

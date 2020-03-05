@@ -1,6 +1,8 @@
 package com.xyc.mealoperation.entity.meal;
 
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.sql.Timestamp;
@@ -8,15 +10,16 @@ import java.sql.Timestamp;
 @Data
 public class Commentforcom {
 
-  private long objectId;
-  private long senderId;
-  private long recipId;
-  private String type;
-  private String status;
-  private String content;
-  private long relationId;
-  private java.sql.Timestamp createTime;
-  private long commentId;
+    @TableId(type = IdType.AUTO)
+    private long objectId;
+    private long senderId;
+    private long recipId;
+    private String type;
+    private String status;
+    private String content;
+    private long relationId;
+    private java.sql.Timestamp createTime;
+    private long commentId;
 
     public long getObjectId() {
         return objectId;
