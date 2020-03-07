@@ -11,19 +11,28 @@
         <result column="DY_ID" property="dyId"/>
         <result column="CREATE_TIME" property="createTime"/>
         <collection property="commentforcomList" ofType="com.xyc.mealoperation.entity.meal.Commentforcom">
-            <id column="OBJECT_ID" property="objectId" />
-            <result column="SENDER_ID" property="senderId"/>
-            <result column="RECIP_ID" property="recipId"/>
-            <result column="TYPE" property="type"/>
-            <result column="STATUS" property="status"/>
-            <result column="CONTENT" property="content"/>
-            <result column="RELATION_ID" property="relationId"/>
-            <result column="CREATE_TIME" property="createTime"/>
-            <result column="COMMENT_ID" property="commentId"/>
+            <id column="bid" property="objectId" />
+            <result column="bsid" property="senderId"/>
+            <result column="brid" property="recipId"/>
+            <result column="btype" property="type"/>
+            <result column="bStatus" property="status"/>
+            <result column="bcontent" property="content"/>
+            <result column="bRelation" property="relationId"/>
+            <result column="btiem" property="createTime"/>
+            <result column="bconID" property="commentId"/>
         </collection>
     </resultMap>
-    <select id="findByDyId" parameterType="java.lang.Integer" resultMap="CommentforcomResultMap">
-        select * from comment a
+    <select id="findByDyId" parameterType="java.lang.Long" resultMap="CommentforcomResultMap">
+        select a.*,b.OBJECT_ID AS bid,
+                   b.SENDER_ID AS bsid,
+                   b.RECIP_ID AS brid,
+                   b.CONTENT AS bcontent,
+                   b.CREATE_TIME AS btiem,
+                   b.COMMENT_ID AS bconID,
+                   b.TYPE AS btype,
+                   b.STATUS AS bStatus,
+                   b.RELATION_ID AS bRelation
+        from comment a
         left join commentforcom b on a.OBJECT_ID = b.COMMENT_ID
         where a.DY_ID = #{dyId}
     </select>

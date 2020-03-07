@@ -16,5 +16,5 @@ import java.util.List;
 @Repository
 @Mapper
 public interface CommentMapper extends BaseMapper<Comment> {
-    List<Comment> findByDyId(@Param("dyId") int dyId);
+    List<Comment> findByDyId(@Param("dyId") Long dyId);
 }

@@ -21,6 +21,6 @@ public class commentServiceTest {
 
     @Test
     public void getAllByDyId() {
-        log.error(commentService.getAllByDyId(1001).toString());
+        log.error(commentService.getAllByDyId(1001L).toString());
     }
 }
