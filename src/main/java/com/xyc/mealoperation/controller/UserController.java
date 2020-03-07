@@ -28,6 +28,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @RequestMapping("/getUser")
+    @ResponseBody
+    public ResultBean<?> getUser(@RequestParam("objectId") Long objectId) {
+        return userService.getUser(objectId);
+    }
     /**
      * 用户登录
      * @param userLoginAO

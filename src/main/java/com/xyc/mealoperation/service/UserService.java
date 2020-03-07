@@ -277,4 +277,10 @@ public class UserService {
         }
         return ResultBean.fail(ErrorEnum.UNKNOWN_EXCEPTION);
     }
+
+    public ResultBean<?> getUser(Long  id) {
+        User user =
+                userMapper.selectById(id);
+        return ResultBean.success(user);
+    }
 }
