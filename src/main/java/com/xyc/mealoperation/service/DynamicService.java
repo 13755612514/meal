@@ -8,12 +8,10 @@ import com.xyc.mealoperation.entity.meal.User;
 import com.xyc.mealoperation.mapper.DynamicMapper;
 import com.xyc.mealoperation.mapper.RelationMapper;
 import com.xyc.mealoperation.mapper.UserMapper;
-import com.xyc.mealoperation.util.Base64Util;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedOutputStream;
