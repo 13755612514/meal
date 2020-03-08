@@ -1,5 +1,6 @@
 package com.xyc.mealoperation.service;
 
+import com.xyc.mealoperation.util.Base64Util;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,10 +24,13 @@ public class UserServiceTest {
 
     @Test
     public void updateHeader() {
+        String content = Base64Util.encryptToBase64("D:\\Base64\\175e467b7f089bc86c97ee04f15c4802.mp4");
+        System.out.println(content);
     }
 
     @Test
     public void register() {
+
     }
 
     @Test

@@ -8,10 +8,12 @@ import com.xyc.mealoperation.entity.meal.User;
 import com.xyc.mealoperation.mapper.DynamicMapper;
 import com.xyc.mealoperation.mapper.RelationMapper;
 import com.xyc.mealoperation.mapper.UserMapper;
+import com.xyc.mealoperation.util.Base64Util;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedOutputStream;
@@ -31,8 +33,8 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 public class DynamicService {
-    private final String WINDOWS_PROFILES_PATH = "C:/meal/profiles/video";
-    private final String LINUX_PROFILES_PATH = "/root/meal/profiles/video";
+    private final String WINDOWS_PROFILES_PATH = "C:/meal/profiles/video/";
+    private final String LINUX_PROFILES_PATH = "/root/meal/profiles/video/";
 
     @Autowired
     private DynamicMapper dynamicMapper;
@@ -52,7 +54,7 @@ public class DynamicService {
         LocalDateTime lastYear = timeNow.minusYears(1);
         //获取过去一年数据显示
         List<Dynamic> dynamicList =
-                dynamicMapper.getAllByTimeBetween(Timestamp.valueOf(lastYear),Timestamp.valueOf(timeNow));
+                dynamicMapper.selectList(new QueryWrapper<Dynamic>());
         return dynamicList;
     }
 
@@ -121,10 +123,12 @@ public class DynamicService {
                     }
                 }
             }
+            Timestamp timeNow = new Timestamp(System.currentTimeMillis());
             //路径存库
             User user = userMapper.selectById(dynamic.getSendId());
             dynamic.setHeadFile(user.getHeader());
             dynamic.setContent(videoPathName);
+            dynamic.setCreateTime(timeNow);
             dynamicMapper.insert(dynamic);
             return "上传成功。";
         }
@@ -146,8 +150,9 @@ public class DynamicService {
                 List<Long> attentionIdList =
                         relationList.stream().map(Relation::getAttentionId).distinct().collect(Collectors.toList());
                 if (!CollectionUtils.isEmpty(attentionIdList)) {
-                    return dynamicMapper.selectList(new QueryWrapper<Dynamic>()
+                    List<Dynamic> dynamicList = dynamicMapper.selectList(new QueryWrapper<Dynamic>()
                             .in("SEND_ID",attentionIdList));
+                    return dynamicList;
                 }
             }
         }
@@ -161,8 +166,9 @@ public class DynamicService {
      */
     public List<Dynamic> findByUserId(User user){
         if (user.getObjectId() != null){
-            return dynamicMapper.selectList(new QueryWrapper<Dynamic>()
+            List<Dynamic> dynamicList = dynamicMapper.selectList(new QueryWrapper<Dynamic>()
                             .eq("SEND_ID",user.getObjectId()));
+            return dynamicList;
         }
         return null;
     }

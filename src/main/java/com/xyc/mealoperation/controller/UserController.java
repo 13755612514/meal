@@ -12,8 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @Author xiongyancong
@@ -35,14 +33,15 @@ public class UserController {
     }
     /**
      * 用户登录
-     * @param userLoginAO
+     * @param
      * @return
      */
     @RequestMapping(value = "/userLogin",method = RequestMethod.POST)
     @ResponseBody
-    public ResultBean<User> userLogin(@RequestBody UserAO userLoginAO){
+    public ResultBean<User> userLogin(@RequestParam("email") String email,
+                                      @RequestParam("password")String password){
         User user =
-                userService.userLogin(userLoginAO.getEmail(),userLoginAO.getPassword());
+                userService.userLogin(email,password);
         if (user != null){
             return ResultBean.success(user);
         }else {

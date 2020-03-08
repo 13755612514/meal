@@ -137,6 +137,7 @@ public class UserService {
         user.setEmail(userAO.getEmail());
         user.setCreatDt(createTime);
         user.setPassword(password);
+        user.setUserName(userAO.getUsername());
         int status = userMapper.saveInfo(user);
         if (status == 1){
             return ResultBean.success(200,"注册成功");
