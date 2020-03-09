@@ -53,7 +53,7 @@ public class DynamicController {
      */
     @RequestMapping("/saveDynamic")
     @ResponseBody
-    public ResultBean saveDynamic(@RequestParam("video") MultipartFile video,
+    public ResultBean saveDynamic(@RequestParam("video") String video,
                                   @RequestParam("sendId") Long sendId,
                                   @RequestParam("title") String title,
                                   @RequestParam("description") String description) {
@@ -61,8 +61,7 @@ public class DynamicController {
         dynamic.setDescription(description);
         dynamic.setTitle(title);
         dynamic.setSendId(sendId);
-        String message = dynamicService.addDynamic(video,dynamic);
-        return ResultBean.success(message);
+        return dynamicService.addDynamic(video,dynamic);
     }
 
     /**

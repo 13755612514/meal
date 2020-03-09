@@ -1,6 +1,7 @@
 package com.xyc.mealoperation.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.xyc.mealoperation.constant.ResultBean;
 import com.xyc.mealoperation.entity.ao.GetDynamicOutAO;
 import com.xyc.mealoperation.entity.meal.Dynamic;
 import com.xyc.mealoperation.entity.meal.Relation;
@@ -84,53 +85,15 @@ public class DynamicService {
      * @param dynamic
      * @return
      */
-    public String addDynamic(MultipartFile video, Dynamic dynamic){
-        //获取操作系统
-        String OSName = System.getProperty("os.name");
-        //根据操作系统选择路径
-        String filePath = OSName.toLowerCase().startsWith("win") ? WINDOWS_PROFILES_PATH : LINUX_PROFILES_PATH;
-        //文件不为空时才写入
-        if (!video.isEmpty()){
-            //获取当前文件名
-            String videoPathName = filePath + System.currentTimeMillis() + video.getOriginalFilename();;
-            //磁盘保存
-            BufferedOutputStream out = null;
-            try {
-                File file = new File(videoPathName);
-                if (!file.getParentFile().exists()){
-                    file.getParentFile().mkdirs();
-                    file.createNewFile();
-                }else {
-                    if (!file.exists()){
-                        file.createNewFile();
-                    }
-                }
-                out = new BufferedOutputStream(new FileOutputStream(videoPathName));
-                //写入文件
-                out.write(videoPathName.getBytes());
-                out.flush();
-            }catch (Exception e){
-                e.printStackTrace();
-                return "上传失败";
-            }finally {
-                if (out != null){
-                    try {
-                        out.close();
-                    }catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
+    public ResultBean<?> addDynamic(String video, Dynamic dynamic){
             Timestamp timeNow = new Timestamp(System.currentTimeMillis());
             //路径存库
             User user = userMapper.selectById(dynamic.getSendId());
             dynamic.setHeadFile(user.getHeader());
-            dynamic.setContent(videoPathName);
+            dynamic.setContent(video);
             dynamic.setCreateTime(timeNow);
             dynamicMapper.insert(dynamic);
-            return "上传成功。";
-        }
-        return "上传成功。";
+            return ResultBean.success(200,"添加成功");
     }
 
     /**

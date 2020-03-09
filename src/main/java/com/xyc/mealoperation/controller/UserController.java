@@ -57,9 +57,8 @@ public class UserController {
      */
     @RequestMapping(value = "/updateUserHeader",method = RequestMethod.POST)
     @ResponseBody
-    public ResultBean<String> updateUserHeader(@RequestParam("headFile") MultipartFile headFile,@RequestParam("email") String email){
-        String message = userService.updateHeader(headFile,email);
-        return ResultBean.success(message);
+    public ResultBean<?> updateUserHeader(@RequestParam("headFile") String headFile,@RequestParam("email") String email){
+        return userService.updateHeader(headFile,email);
     }
 
     /**
