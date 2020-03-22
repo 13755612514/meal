@@ -186,6 +186,9 @@ public class UserService {
             List<Dynamic> dynamicList =
                     dynamicMapper.selectList(new QueryWrapper<Dynamic>()
                             .in("OBJECT_ID",dynamicIdList));
+            dynamicList.forEach(dynamic -> {
+                dynamic.setType(1);
+            });
             return ResultBean.success(dynamicList);
         }
         return ResultBean.fail(ErrorEnum.DATA_NOT_FOUND);
