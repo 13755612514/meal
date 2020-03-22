@@ -196,14 +196,21 @@ public class UserService {
 
     /**
      * 取消收藏
-     * @param objectId
+     * @param userId
+     * @param dyId
      * @return
      */
-    public ResultBean deleteFavDy(Long objectId){
-        int status = favoriteMapper.deleteById(objectId);
-        if (status == 1) {
-            return ResultBean.success(0,"取消收藏成功");
+    public ResultBean deleteFavDy(Long userId, Long dyId){
+        Favorite favorite = favoriteMapper.selectOne(new QueryWrapper<Favorite>()
+                .eq("USER_ID",userId)
+                .eq("DY_ID",dyId));
+        if (favorite != null) {
+            int status = favoriteMapper.deleteById(favorite.getObjectId());
+            if (status == 1) {
+                return ResultBean.success(0,"取消收藏成功");
+            }
         }
+
         return ResultBean.fail(ErrorEnum.DATA_NOT_FOUND);
     }
 

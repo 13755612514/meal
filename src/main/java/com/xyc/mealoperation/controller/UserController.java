@@ -152,14 +152,16 @@ public class UserController {
     }
 
     /**
-     * 取消收藏
-     * @param objectId
+     *
+     * @param userId
+     * @param dyId
      * @return
      */
     @RequestMapping(value = "/deleteFavDy")
     @ResponseBody
-    public ResultBean<?> deleteFavDy(@RequestParam("objectId") Long objectId) {
-        return userService.deleteFavDy(objectId);
+    public ResultBean<?> deleteFavDy(@RequestParam("userId") Long userId,
+                                     @RequestParam("dyId") Long dyId) {
+        return userService.deleteFavDy(userId,dyId);
     }
 
     /**
