@@ -47,7 +47,7 @@ public class CommentService {
         comment.setCreateTime(timeNow);
         int status = commentMapper.insert(comment);
         if (status == 1) {
-            return ResultBean.success(200,"评论(对动态)成功");
+            return ResultBean.success(0,"评论(对动态)成功");
         }
         return ResultBean.fail(ErrorEnum.UNKNOWN_EXCEPTION);
     }
@@ -62,7 +62,7 @@ public class CommentService {
         commentforcom.setCreateTime(timeNow);
         int status = commentforcomMapper.insert(commentforcom);
         if (status == 1) {
-            return ResultBean.success(200,"评论(对评论)成功");
+            return ResultBean.success(0,"评论(对评论)成功");
         }
         return ResultBean.fail(ErrorEnum.UNKNOWN_EXCEPTION);
     }

@@ -93,7 +93,7 @@ public class DynamicService {
             dynamic.setContent(video);
             dynamic.setCreateTime(timeNow);
             dynamicMapper.insert(dynamic);
-            return ResultBean.success(200,"添加成功");
+            return ResultBean.success(0,"添加成功");
     }
 
     /**

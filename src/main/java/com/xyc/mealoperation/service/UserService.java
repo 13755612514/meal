@@ -70,7 +70,7 @@ public class UserService {
      */
     public ResultBean<?> updateHeader(String headerFile,String email){
         userMapper.updateHeaderByEmail(email,headerFile);
-        return ResultBean.success(200,"更换头像成功");
+        return ResultBean.success(0,"更换头像成功");
     }
 
     /**
@@ -91,7 +91,7 @@ public class UserService {
         user.setUserName(userAO.getUsername());
         int status = userMapper.saveInfo(user);
         if (status == 1){
-            return ResultBean.success(200,"注册成功");
+            return ResultBean.success(0,"注册成功");
         }else {
             return ResultBean.fail(ErrorEnum.UNKNOWN_EXCEPTION);
         }
@@ -144,7 +144,7 @@ public class UserService {
         relation2.setCreateDt(timeNow.format(formatter));
         relation2.setFollowedHeader(header);
         int status = relationMapper.insert(relation2);
-        return ResultBean.success(200,"关注成功");
+        return ResultBean.success(0,"关注成功");
     }
 
     /**
@@ -155,7 +155,7 @@ public class UserService {
     public ResultBean deleteRelation(Long objectId){
         int status = relationMapper.deleteById(objectId);
         if (status == 1) {
-            return ResultBean.success(200,"取消成功");
+            return ResultBean.success(0,"取消成功");
         }
         return ResultBean.fail(ErrorEnum.DATA_NOT_FOUND);
     }
@@ -199,7 +199,7 @@ public class UserService {
     public ResultBean deleteFavDy(Long objectId){
         int status = favoriteMapper.deleteById(objectId);
         if (status == 1) {
-            return ResultBean.success(200,"取消收藏成功");
+            return ResultBean.success(0,"取消收藏成功");
         }
         return ResultBean.fail(ErrorEnum.DATA_NOT_FOUND);
     }
@@ -225,7 +225,7 @@ public class UserService {
         favorite.setUpdateTime(timeNow);
         int status = favoriteMapper.insert(favorite);
         if (status == 1) {
-            return ResultBean.success(200,"收藏成功");
+            return ResultBean.success(0,"收藏成功");
         }
         return ResultBean.fail(ErrorEnum.UNKNOWN_EXCEPTION);
     }

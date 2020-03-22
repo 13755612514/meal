@@ -82,7 +82,7 @@ public class UserController {
     public ResultBean<?> updateInfo(User user){
         String status = userService.updateUserInfo(user);
         if ("1".equals(status)) {
-            return ResultBean.success(200,"更新成功");
+            return ResultBean.success(0,"更新成功");
         }else {
             return ResultBean.fail(ErrorEnum.UNKNOWN_EXCEPTION);
         }
@@ -99,7 +99,7 @@ public class UserController {
     public ResultBean<?> updatePassword(@RequestParam("objectId")Long objectId, @RequestParam("password") String password) {
         int status = userService.updatePassword(objectId,password);
         if (status == 1) {
-            return ResultBean.success(200,"更新成功");
+            return ResultBean.success(0,"更新成功");
         }else {
             return ResultBean.fail(ErrorEnum.UNKNOWN_EXCEPTION);
         }
