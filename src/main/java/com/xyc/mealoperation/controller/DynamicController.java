@@ -28,9 +28,9 @@ public class DynamicController {
 
     @RequestMapping("/dynamicOut")
     @ResponseBody
-    public ResultBean dynamicOut(){
+    public ResultBean dynamicOut(@RequestParam("objectId") Long objectId){
         List<Dynamic> dynamicList =
-                dynamicService.getAllDynamic();
+                dynamicService.getAllDynamic(objectId);
         log.info(dynamicList.toString());
         return ResultBean.success(dynamicList);
     }
