@@ -5,6 +5,7 @@ import com.xyc.mealoperation.entity.ao.GetDynamicOutAO;
 import com.xyc.mealoperation.entity.meal.Dynamic;
 import com.xyc.mealoperation.entity.meal.User;
 import com.xyc.mealoperation.service.DynamicService;
+import com.xyc.mealoperation.util.OSSUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -54,6 +55,27 @@ public class DynamicController {
     @RequestMapping("/saveDynamic")
     @ResponseBody
     public ResultBean saveDynamic(@RequestParam("video") String video,
+                                  @RequestParam("sendId") Long sendId,
+                                  @RequestParam("title") String title,
+                                  @RequestParam("description") String description) {
+        Dynamic dynamic = new Dynamic();
+        dynamic.setDescription(description);
+        dynamic.setTitle(title);
+        dynamic.setSendId(sendId);
+        return dynamicService.addDynamic(video,dynamic);
+    }
+
+    /**
+     * 添加动态
+     * @param video
+     * @param sendId
+     * @param title
+     * @param description
+     * @return
+     */
+    @RequestMapping(value = "/saveDynamicFile", headers="content-type=multipart/form-data")
+    @ResponseBody
+    public ResultBean saveDynamic(@RequestParam("video") MultipartFile video,
                                   @RequestParam("sendId") Long sendId,
                                   @RequestParam("title") String title,
                                   @RequestParam("description") String description) {

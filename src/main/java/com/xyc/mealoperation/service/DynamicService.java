@@ -1,6 +1,7 @@
 package com.xyc.mealoperation.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.xyc.mealoperation.constant.ErrorEnum;
 import com.xyc.mealoperation.constant.ResultBean;
 import com.xyc.mealoperation.entity.ao.GetDynamicOutAO;
 import com.xyc.mealoperation.entity.meal.Dynamic;
@@ -11,16 +12,14 @@ import com.xyc.mealoperation.mapper.DynamicMapper;
 import com.xyc.mealoperation.mapper.FavoriteMapper;
 import com.xyc.mealoperation.mapper.RelationMapper;
 import com.xyc.mealoperation.mapper.UserMapper;
+import com.xyc.mealoperation.util.OSSUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -114,6 +113,22 @@ public class DynamicService {
             dynamic.setCreateTime(timeNow);
             dynamicMapper.insert(dynamic);
             return ResultBean.success(0,"添加成功");
+    }
+
+    public ResultBean<?> addDynamic(MultipartFile video, Dynamic dynamic){
+        Timestamp timeNow = new Timestamp(System.currentTimeMillis());
+        if (!video.isEmpty()) {
+            try {
+                String url = OSSUtil.saveVideo(dynamic.getSendId(),video);
+                dynamic.setContent(url);
+                dynamic.setCreateTime(timeNow);
+                dynamicMapper.insert(dynamic);
+                return ResultBean.success(0,"添加成功");
+            }catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return ResultBean.fail(ErrorEnum.UNKNOWN_EXCEPTION);
     }
 
     /**

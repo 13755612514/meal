@@ -1,7 +1,5 @@
 server:
   port: 8088
-  tomcat:
-    max-http-form-post-size: -1
 spring:
   servlet:
     multipart:
