@@ -44,26 +44,6 @@ public class DynamicController {
         return ResultBean.success(dynamicList);
     }
 
-    /**
-     * 添加动态
-     * @param video
-     * @param sendId
-     * @param title
-     * @param description
-     * @return
-     */
-    @RequestMapping("/saveDynamic")
-    @ResponseBody
-    public ResultBean saveDynamic(@RequestParam("video") String video,
-                                  @RequestParam("sendId") Long sendId,
-                                  @RequestParam("title") String title,
-                                  @RequestParam("description") String description) {
-        Dynamic dynamic = new Dynamic();
-        dynamic.setDescription(description);
-        dynamic.setTitle(title);
-        dynamic.setSendId(sendId);
-        return dynamicService.addDynamic(video,dynamic);
-    }
 
     /**
      * 添加动态
@@ -73,7 +53,7 @@ public class DynamicController {
      * @param description
      * @return
      */
-    @RequestMapping(value = "/saveDynamicFile", headers="content-type=multipart/form-data")
+    @RequestMapping(value = "/saveDynamic")
     @ResponseBody
     public ResultBean saveDynamic(@RequestParam("video") MultipartFile video,
                                   @RequestParam("sendId") Long sendId,

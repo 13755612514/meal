@@ -66,12 +66,23 @@ public class DynamicService {
             dynamicIdList =
                     favoriteList.stream().map(Favorite::getDyId).distinct().collect(Collectors.toList());
         }
+        //判断用户是否关注了该用户
+        //获取用户关注列表
+        List<Long> attentionIdList  =
+                relationMapper.selectList(new QueryWrapper<Relation>()
+                        .eq("USER_ID",userId)).stream().map(Relation::getAttentionId).collect(Collectors.toList());
         List<Long> finalDynamicIdList = dynamicIdList;
         dynamicList.forEach(dynamic -> {
             if (!CollectionUtils.isEmpty(finalDynamicIdList) && finalDynamicIdList.contains(dynamic.getObjectId())) {
                 dynamic.setType(1);
-            }else
+            }else {
                 dynamic.setType(0);
+            }
+            if (!CollectionUtils.isEmpty(attentionIdList) && attentionIdList.contains(dynamic.getSendId())) {
+                dynamic.setLikeCount(1);
+            }else {
+                dynamic.setLikeCount(0);
+            }
         });
         return dynamicList;
     }
@@ -148,6 +159,9 @@ public class DynamicService {
                 if (!CollectionUtils.isEmpty(attentionIdList)) {
                     List<Dynamic> dynamicList = dynamicMapper.selectList(new QueryWrapper<Dynamic>()
                             .in("SEND_ID",attentionIdList));
+                    dynamicList.forEach(dynamic -> {
+                        dynamic.setLikeCount(1);
+                    });
                     return dynamicList;
                 }
             }
