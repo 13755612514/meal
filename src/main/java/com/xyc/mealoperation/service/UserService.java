@@ -149,11 +149,13 @@ public class UserService {
 
     /**
      * 取消关注
-     * @param objectId
+     * @param userId
+     * @param attentionId
      * @return
      */
-    public ResultBean deleteRelation(Long objectId){
-        int status = relationMapper.deleteById(objectId);
+    public ResultBean deleteRelation(Long userId, Long attentionId){
+        int status = relationMapper.delete(new QueryWrapper<Relation>().eq("USER_ID",userId)
+                                    .eq("ATTENTION_ID",attentionId));
         if (status == 1) {
             return ResultBean.success(0,"取消成功");
         }

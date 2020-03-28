@@ -130,14 +130,16 @@ public class UserController {
     }
 
     /**
-     * 取消关注
-     * @param objectId
+     *
+     * @param userId
+     * @param attentionId
      * @return
      */
     @RequestMapping(value = "/deleteRelation")
     @ResponseBody
-    public ResultBean<?> deleteRelation(@RequestParam("objectId") Long objectId) {
-        return userService.deleteRelation(objectId);
+    public ResultBean<?> deleteRelation(@RequestParam("userId") Long userId,
+                                        @RequestParam("attentionId") Long attentionId) {
+        return userService.deleteRelation(userId,attentionId);
     }
 
     /**
@@ -152,7 +154,7 @@ public class UserController {
     }
 
     /**
-     *
+     * 取消收藏
      * @param userId
      * @param dyId
      * @return
