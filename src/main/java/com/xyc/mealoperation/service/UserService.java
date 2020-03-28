@@ -193,7 +193,7 @@ public class UserService {
             });
             return ResultBean.success(dynamicList);
         }
-        return ResultBean.fail(ErrorEnum.DATA_NOT_FOUND);
+        return null;
     }
 
     /**
