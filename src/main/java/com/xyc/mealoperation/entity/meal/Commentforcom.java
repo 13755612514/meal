@@ -3,7 +3,9 @@ package com.xyc.mealoperation.entity.meal;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Timestamp;
 
@@ -18,6 +20,12 @@ public class Commentforcom {
     private String status;
     private String content;
     private long relationId;
+    @DateTimeFormat(
+            pattern = "yyyy-MM-dd HH:mm:ss"
+    )
+    @JsonFormat(
+            pattern = "yyyy-MM-dd HH:mm:ss"
+    )
     private java.sql.Timestamp createTime;
     private long commentId;
 

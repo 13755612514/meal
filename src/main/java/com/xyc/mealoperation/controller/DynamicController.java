@@ -53,7 +53,7 @@ public class DynamicController {
      * @param description
      * @return
      */
-    @RequestMapping(value = "/saveDynamic")
+    @RequestMapping(value = "/saveDynamic", method = RequestMethod.POST)
     @ResponseBody
     public ResultBean saveDynamic(@RequestParam("video") MultipartFile video,
                                   @RequestParam("sendId") Long sendId,
